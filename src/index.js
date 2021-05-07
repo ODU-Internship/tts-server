@@ -1,6 +1,11 @@
 const express = require("express");
 const https = require('https');
 var bodyParser = require('body-parser');
+const {
+    adminRouter,
+    authRouter,
+    supervisorRouter
+} = require('./routers/router');
 
 const app = express();
 
@@ -14,6 +19,10 @@ const projects = [
     { name: 'Stress Detection', id: 2 },
     { name: 'Fall Detection', id: 3 }
 ]
+
+app.use('/admins', adminRouter);
+app.use('/supervisors', supervisorRouter);
+app.use('/auth', authRouter);
 
 app.get("/", (req, res) => {
     res.send('Team Alpha');
