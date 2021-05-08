@@ -1,18 +1,32 @@
 const express = require("express");
 const https = require('https');
 var bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const cors = require("cors");
 const {
     adminRouter,
     authRouter,
     supervisorRouter
 } = require('./routers/router');
 
+require('dotenv').config();
+
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
+);
+const connection = mongoose.connection;
+connection.once('open', () => {
+    console.log("MongoDB database connection established successfully!");
+})
+
 
 const projects = [
     { name: 'TTS', id: 1 },
@@ -20,8 +34,8 @@ const projects = [
     { name: 'Fall Detection', id: 3 }
 ]
 
-app.use('/admins', adminRouter);
-app.use('/supervisors', supervisorRouter);
+// app.use('/admins', adminRouter);
+// app.use('/supervisors', supervisorRouter);
 app.use('/auth', authRouter);
 
 app.get("/", (req, res) => {

@@ -1,4 +1,4 @@
-const HttpStatus = require('http-status-codes');
+const StatusCodes = require('http-status-codes');
 
 exports.successResponse = (res) => res.status(StatusCodes.OK).json();
 

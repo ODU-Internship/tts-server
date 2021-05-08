@@ -2,8 +2,8 @@ const {
     successResponseWithData, unauthorizedResponse,
 } = require('../helpers/response');
 const { createPermissionError } = require('../helpers/errors');
-const { getAdminDetails } = require('../sql/admins');
-const { getSupervisorDetails } = require('../sql/supervisors');
+let Admin = require('../models/admin.model');
+let Supervisor = require('../models/supervisor.model');
 
 // admin section
 module.exports.postAdminLoginController = [async (req, res) => {
@@ -11,11 +11,11 @@ module.exports.postAdminLoginController = [async (req, res) => {
         const {
             aid, password,
         } = req.body;
-        const admin = await getAdminDetails(aid);
+        const admin = await Admin.getAdminDetails(aid);
         if (admin.password !== password) {
             throw createPermissionError('admin_password_mismatch', 'Admin password does not match');
         }
-        delete admin.password;
+        admin.password = undefined;
         successResponseWithData(res, admin);
     } catch (error) {
         unauthorizedResponse(res, error);
@@ -28,11 +28,11 @@ module.exports.postSupervisorLoginController = [async (req, res) => {
         const {
             sid, password,
         } = req.body;
-        const supervisor = await getSupervisorDetails(sid);
+        const supervisor = await Supervisor.getSupervisorDetails(sid);
         if (supervisor.password !== password) {
             throw createPermissionError('supervisor_password_mismatch', 'Supervisor password does not match');
         }
-        delete supervisor.password;
+        supervisor.password = undefined;
         successResponseWithData(res, supervisor);
     } catch (error) {
         unauthorizedResponse(res, error);
