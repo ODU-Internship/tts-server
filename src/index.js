@@ -6,7 +6,8 @@ const cors = require("cors");
 const {
     adminRouter,
     authRouter,
-    supervisorRouter
+    supervisorRouter,
+    messageRouter
 } = require('./routers/router');
 
 require('dotenv').config();
@@ -37,6 +38,7 @@ const projects = [
 // app.use('/admins', adminRouter);
 // app.use('/supervisors', supervisorRouter);
 app.use('/auth', authRouter);
+app.use('/message', messageRouter);
 
 app.get("/", (req, res) => {
     res.send('Team Alpha');
