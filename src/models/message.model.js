@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 mongoose.set('useFindAndModify', false);
 
 const messageSchema = new Schema({
-    mid: {
+    messageID: {
         type: String,
         required: true,
         unique: true,
@@ -19,7 +19,6 @@ const messageSchema = new Schema({
     },
     label: {
         type: String,
-        required: false,
         trim: true,
         minlength: 2
     }
@@ -29,12 +28,20 @@ const messageSchema = new Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-Message.getMessageDetails = (mid) =>
-    Message.find({ mid: mid })
+Message.getAllMessageDetails = () =>
+    Message.find()
+        .then(message => message);
+
+Message.getMessageDetails = (messageID) =>
+    Message.find({ messageID: messageID })
         .then(message => message[0]);
 
 Message.updateMessageDetails = (id, label) =>
     Message.findByIdAndUpdate(id, { label: label }, { new: true })
+        .then(message => message);
+
+Message.insertMessageDetails = (messageID, message) =>
+    Message.create({ messageID: messageID, message: message })
         .then(message => message);
 
 module.exports = Message;
