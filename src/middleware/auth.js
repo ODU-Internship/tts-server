@@ -9,7 +9,7 @@ const findSupervisor = async (req) => {
     .header(constants.authorizatationHeaderName)
     .replace(constants.bearerTokenLabel, '');
   const { sid } = tokens.decodeAccessToken(accessToken);
-  return User.findOne({ sid, 'tokens.accessToken': accessToken });
+  return Supervisor.findOne({ sid, 'tokens.accessToken': accessToken });
 };
 
 // auth controller only for supervisor access
