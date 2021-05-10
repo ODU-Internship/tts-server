@@ -48,6 +48,7 @@ const Supervisor = mongoose.model("Supervisor", supervisorSchema);
 
 Supervisor.generateAuthToken = async function generateAuthToken() {
   // Generates an access token and refresh token for the supervisor
+  
   const supervisor = this;
   const accessToken = tokens.createAccessToken(supervisor.sid);
   const refreshToken = tokens.createRefreshToken(supervisor.sid);
@@ -57,6 +58,7 @@ Supervisor.generateAuthToken = async function generateAuthToken() {
     refreshToken,
     refreshTokenTime: 604800,
   };
+  console.log(supervisor.tokens);
   supervisor.tokens.push(token);
   await supervisor.save();
   return token;

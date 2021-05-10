@@ -33,6 +33,7 @@ module.exports.postSupervisorLoginController = [async (req, res) => {
             throw createPermissionError('supervisor_password_mismatch', 'Supervisor password does not match');
         }
         supervisor.password = undefined;
+        await Supervisor.generateAuthToken();
         successResponseWithData(res, supervisor);
     } catch (error) {
         unauthorizedResponse(res, error);
