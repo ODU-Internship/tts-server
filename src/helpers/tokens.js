@@ -1,13 +1,17 @@
 /* eslint-disable max-len */
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-exports.createAccessToken = (sid) => jwt.sign({ sid }, process.env.ACCESS_TOKEN_JWT_KEY, { expiresIn: '1h' });
+exports.createAccessToken = (id) =>
+  jwt.sign({ id }, process.env.ACCESS_TOKEN_JWT_KEY, { expiresIn: "365d" });
 
-exports.createRefreshToken = (sid) => jwt.sign({ sid }, process.env.REFRESH_TOKEN_JWT_KEY, { expiresIn: '7h' });
+exports.createRefreshToken = (id) =>
+  jwt.sign({ id }, process.env.REFRESH_TOKEN_JWT_KEY, { expiresIn: "2y" });
 
-exports.decodeRefreshToken = (refreshToken) => jwt.verify(refreshToken, process.env.REFRESH_TOKEN_JWT_KEY);
+exports.decodeRefreshToken = (refreshToken) =>
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_JWT_KEY);
 
-exports.decodeAccessToken = (accessToken) => jwt.verify(accessToken, process.env.ACCESS_TOKEN_JWT_KEY);
+exports.decodeAccessToken = (accessToken) =>
+  jwt.verify(accessToken, process.env.ACCESS_TOKEN_JWT_KEY);
 
 exports.findRefreshToken = (user, refreshToken) => {
   let tokenIndex = -1;
