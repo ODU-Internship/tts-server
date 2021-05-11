@@ -63,24 +63,24 @@ custRepSchema.methods.generateAuthToken = async function generateAuthToken() {
   return token;
 };
 
-const CustRep = mongoose.model("CustRep", custRepSchema);
+custRepSchema.methods.refreshAccessToken = async (refreshToken) => {
+    // Search for a custRep by sid
+    const { cid } = tokens.decodeRefreshToken(refreshToken);
+    const custRep = await CustRep.findOne({ cid, "tokens.refreshToken": refreshToken });
+    if (!custRep) {
+      throw new Error({ message: "CustRep Not found" });
+    }
+    const index = tokens.findRefreshToken(custRep, refreshToken);
+    if (index === -1) {
+      throw new Error({ message: "Refresh token dosent exist Suddenly but how" });
+    }
+    const accessToken = tokens.createAccessToken(sid);
+    custRep.tokens[index].accessToken = accessToken;
+    await custRep.save();
+    return custRep.tokens[index];
+  };
 
-CustRep.refreshAccessToken = async (refreshToken) => {
-  // Search for a custRep by sid
-  const { cid } = tokens.decodeRefreshToken(refreshToken);
-  const custRep = await CustRep.findOne({ cid, "tokens.refreshToken": refreshToken });
-  if (!custRep) {
-    throw new Error({ message: "CustRep Not found" });
-  }
-  const index = tokens.findRefreshToken(custRep, refreshToken);
-  if (index === -1) {
-    throw new Error({ message: "Refresh token dosent exist Suddenly but how" });
-  }
-  const accessToken = tokens.createAccessToken(sid);
-  custRep.tokens[index].accessToken = accessToken;
-  await custRep.save();
-  return custRep.tokens[index];
-};
+const CustRep = mongoose.model("CustRep", custRepSchema);
 
 CustRep.getCustRepDetails = (cid) =>
     CustRep.find({ cid: cid }).then((custRep) => custRep[0]);

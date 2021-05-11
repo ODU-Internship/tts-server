@@ -62,9 +62,7 @@ supervisorSchema.methods.generateAuthToken = async function generateAuthToken() 
   return token;
 };
 
-const Supervisor = mongoose.model("Supervisor", supervisorSchema);
-
-Supervisor.refreshAccessToken = async (refreshToken) => {
+supervisorSchema.methods.refreshAccessToken = async (refreshToken) => {
   // Search for a supervisor by sid
   const { sid } = tokens.decodeRefreshToken(refreshToken);
   const supervisor = await Supervisor.findOne({ sid, "tokens.refreshToken": refreshToken });
@@ -80,6 +78,10 @@ Supervisor.refreshAccessToken = async (refreshToken) => {
   await supervisor.save();
   return supervisor.tokens[index];
 };
+
+
+const Supervisor = mongoose.model("Supervisor", supervisorSchema);
+
 
 Supervisor.getSupervisorDetails = (sid) =>
   Supervisor.find({ sid: sid }).then((supervisor) => supervisor[0]);
