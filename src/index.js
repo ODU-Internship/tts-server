@@ -1,13 +1,13 @@
 const express = require("express");
 const https = require('https');
 var bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const cors = require("cors");
 const {
     adminRouter,
     authRouter,
     supervisorRouter,
-    messageRouter
+    messageRouter,
+    custRepRouter
 } = require('./routers/router');
 
 require('dotenv').config();
@@ -20,13 +20,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
-);
-const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log("MongoDB database connection established successfully!");
-})
+require('./db/db');
 
 
 const projects = [
@@ -36,9 +30,10 @@ const projects = [
 ]
 
 // app.use('/admins', adminRouter);
-// app.use('/supervisors', supervisorRouter);
+app.use('/supervisors', supervisorRouter);
 app.use('/auth', authRouter);
 app.use('/message', messageRouter);
+app.use('/custRep', custRepRouter);
 
 app.get("/", (req, res) => {
     res.send('Team Alpha');

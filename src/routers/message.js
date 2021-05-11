@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/all', getAllMessageController);
 router.get('/:messageID', getMessageController);
 router.post('/update', updateMessageController);
-router.post('/insert', insertMessageController)
+router.post('/insert', insertMessageController);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const {
 const { createPermissionError } = require('../helpers/errors');
 let Admin = require('../models/admin.model');
 let Supervisor = require('../models/supervisor.model');
+let CustRep = require('../models/custRep.model');
 
 // admin section
 module.exports.postAdminLoginController = [async (req, res) => {
@@ -32,8 +33,27 @@ module.exports.postSupervisorLoginController = [async (req, res) => {
         if (supervisor.password !== password) {
             throw createPermissionError('supervisor_password_mismatch', 'Supervisor password does not match');
         }
+        await supervisor.generateAuthToken();
         supervisor.password = undefined;
         successResponseWithData(res, supervisor);
+    } catch (error) {
+        unauthorizedResponse(res, error);
+    }
+}];
+
+// custRep section
+module.exports.postCustRepLoginController = [async (req, res) => {
+    try {
+        const {
+            cid, password,
+        } = req.body;
+        const custRep = await CustRep.getCustRepDetails(cid);
+        if (custRep == undefined ||  custRep.password !== password) {
+            throw createPermissionError('custRep_password_mismatch', 'CustRep password does not match');
+        }
+        await custRep.generateAuthToken();
+        custRep.password = undefined;
+        successResponseWithData(res, custRep);
     } catch (error) {
         unauthorizedResponse(res, error);
     }
