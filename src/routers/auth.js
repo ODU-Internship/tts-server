@@ -1,5 +1,5 @@
 const express = require('express');
-const { postAdminLoginController, postSupervisorLoginController } = require('../controllers/AuthController');
+const { postAdminLoginController, postSupervisorLoginController, postCustRepLoginController } = require('../controllers/AuthController');
 
 const router = express.Router();
 
@@ -16,6 +16,13 @@ router.post('/admin/login', postAdminLoginController);
   * response :  200 OK RESPONSE-USER
 */
 router.post('/supervisor/login', postSupervisorLoginController);
+
+/**
+  * request  :  { cid, password }
+  *
+  * response :  200 OK RESPONSE-USER
+*/
+router.post('/custRep/login', postCustRepLoginController);
 
 
 

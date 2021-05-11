@@ -6,7 +6,8 @@ const {
     adminRouter,
     authRouter,
     supervisorRouter,
-    messageRouter
+    messageRouter,
+    custRepRouter
 } = require('./routers/router');
 
 require('dotenv').config();
@@ -29,9 +30,10 @@ const projects = [
 ]
 
 // app.use('/admins', adminRouter);
-// app.use('/supervisors', supervisorRouter);
+app.use('/supervisors', supervisorRouter);
 app.use('/auth', authRouter);
 app.use('/message', messageRouter);
+app.use('/custRep', custRepRouter);
 
 app.get("/", (req, res) => {
     res.send('Team Alpha');
