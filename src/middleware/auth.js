@@ -41,7 +41,6 @@ module.exports.supervisorAuth = async (req, res, next) => {
 
 module.exports.custRepAuth = async (req, res, next) => {
   try {
-    console.log("Inside CustRep");
     const custRep = await findCustRep(req);
     if (!custRep) {
       throw new Error("CustRep not found");
