@@ -44,28 +44,32 @@ const supervisorSchema = new Schema(
   }
 );
 
-supervisorSchema.methods.generateAuthToken = async function generateAuthToken() {
-  // Generates an access token and refresh token for the supervisor
-  
-  const supervisor = this;
-  const accessToken = tokens.createAccessToken(supervisor.sid);
-  const refreshToken = tokens.createRefreshToken(supervisor.sid);
-  const token = {
-    accessToken,
-    accessTokenTime: 3600,
-    refreshToken,
-    refreshTokenTime: 604800,
+supervisorSchema.methods.generateAuthToken =
+  async function generateAuthToken() {
+    // Generates an access token and refresh token for the supervisor
+
+    const supervisor = this;
+    const accessToken = tokens.createAccessToken(supervisor.sid);
+    const refreshToken = tokens.createRefreshToken(supervisor.sid);
+    const token = {
+      accessToken,
+      accessTokenTime: 3600,
+      refreshToken,
+      refreshTokenTime: 604800,
+    };
+    console.log(supervisor.tokens);
+    supervisor.tokens.push(token);
+    await supervisor.save();
+    return token;
   };
-  console.log(supervisor.tokens);
-  supervisor.tokens.push(token);
-  await supervisor.save();
-  return token;
-};
 
 supervisorSchema.methods.refreshAccessToken = async (refreshToken) => {
   // Search for a supervisor by sid
   const { sid } = tokens.decodeRefreshToken(refreshToken);
-  const supervisor = await Supervisor.findOne({ sid, "tokens.refreshToken": refreshToken });
+  const supervisor = await Supervisor.findOne({
+    sid,
+    "tokens.refreshToken": refreshToken,
+  });
   if (!supervisor) {
     throw new Error({ message: "Supervisor Not found" });
   }
@@ -79,9 +83,7 @@ supervisorSchema.methods.refreshAccessToken = async (refreshToken) => {
   return supervisor.tokens[index];
 };
 
-
 const Supervisor = mongoose.model("Supervisor", supervisorSchema);
-
 
 Supervisor.getSupervisorDetails = (sid) =>
   Supervisor.find({ sid: sid }).then((supervisor) => supervisor[0]);

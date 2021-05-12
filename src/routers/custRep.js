@@ -13,8 +13,8 @@ const { custRepAuth } = require("../middleware/auth");
 router.use(custRepAuth);
 
 router.get("/messages", getAllMessageController);
-router.put("/messages/:messageID", updateMessageController);
 router.get("/messages/:messageID", getMessageController);
+router.put("/messages/:messageID", updateMessageController);
 router.post("/messages/", insertMessageController);
 
 module.exports = router;
