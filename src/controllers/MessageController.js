@@ -56,8 +56,10 @@ module.exports.insertMessageController = [
 module.exports.updateMessageController = [
   async (req, res) => {
     try {
-      const { id, label } = req.body;
-      const message = await Message.updateMessageDetails(id, label);
+      const { messageID } = req.params;
+      const { label } = req.body;
+      console.log(messageID);
+      const message = await Message.updateMessageDetails(messageID, label);
       if (message == undefined) {
         throw messageNotFoundError(
           "MessageID_invalid",
