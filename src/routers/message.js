@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", getAllMessageController);
 router.get("/:messageID", getMessageController);
-router.put("/update/:messageID", updateMessageController);
-router.post("/insert", insertMessageController);
+router.put("/:messageID", updateMessageController);
+router.post("/", insertMessageController);
 
 module.exports = router;

@@ -10,7 +10,7 @@ const findSupervisor = async (req) => {
     .header(constants.authorizatationHeaderName)
     .replace(constants.bearerTokenLabel, "");
   const { id } = tokens.decodeAccessToken(accessToken);
-  console.log(id);
+  console.log(tokens.decodeAccessToken(accessToken));
   return Supervisor.findOne({ sid: id, "tokens.accessToken": accessToken });
 };
 
@@ -19,6 +19,7 @@ const findCustRep = async (req) => {
     .header(constants.authorizatationHeaderName)
     .replace(constants.bearerTokenLabel, "");
   const { id } = tokens.decodeAccessToken(accessToken);
+  console.log(tokens.decodeAccessToken(accessToken));
   return CustRep.findOne({ cid: id, "tokens.accessToken": accessToken });
 };
 
@@ -26,7 +27,6 @@ const findCustRep = async (req) => {
 module.exports.supervisorAuth = async (req, res, next) => {
   try {
     const supervisor = await findSupervisor(req);
-    console.log(supervisor);
     if (!supervisor) {
       throw new Error("Supervisor not found");
     }
@@ -46,6 +46,7 @@ module.exports.supervisorAuth = async (req, res, next) => {
 module.exports.custRepAuth = async (req, res, next) => {
   try {
     const custRep = await findCustRep(req);
+    console.log(custRep);
     if (!custRep) {
       throw new Error("CustRep not found");
     }

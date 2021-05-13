@@ -17,4 +17,6 @@ router.get("/messages/:messageID", getMessageController);
 router.put("/messages/:messageID", updateMessageController);
 router.post("/messages/", insertMessageController);
 
+router.get("/me", getCustRepController);
+
 module.exports = router;

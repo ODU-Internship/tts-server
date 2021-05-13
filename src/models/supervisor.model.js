@@ -57,7 +57,6 @@ supervisorSchema.methods.generateAuthToken =
       refreshToken,
       refreshTokenTime: 604800,
     };
-    console.log(supervisor.tokens);
     supervisor.tokens.push(token);
     await supervisor.save();
     return token;

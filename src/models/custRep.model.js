@@ -48,15 +48,14 @@ custRepSchema.methods.generateAuthToken = async function generateAuthToken() {
   // Generates an access token and refresh token for the custRep
 
   const custRep = this;
-  const accessToken = tokens.createAccessToken(custRep.sid);
-  const refreshToken = tokens.createRefreshToken(custRep.sid);
+  const accessToken = tokens.createAccessToken(custRep.cid);
+  const refreshToken = tokens.createRefreshToken(custRep.cid);
   const token = {
     accessToken,
     accessTokenTime: 3600,
     refreshToken,
     refreshTokenTime: 604800,
   };
-  console.log(custRep.tokens);
   custRep.tokens.push(token);
   await custRep.save();
   return token;
