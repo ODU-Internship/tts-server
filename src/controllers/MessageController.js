@@ -48,8 +48,19 @@ module.exports.getMessageController = [
 module.exports.insertMessageController = [
   async (req, res) => {
     try {
-      const { message, label, company, category, type, prediction } = req.body;
+      const {
+        custName,
+        custDetails,
+        message,
+        label,
+        company,
+        category,
+        type,
+        prediction,
+      } = req.body;
       const res_message = await Message.insertMessageDetails(
+        custName,
+        custDetails,
         message,
         label,
         company,

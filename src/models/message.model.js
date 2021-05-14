@@ -5,6 +5,18 @@ mongoose.set("useFindAndModify", false);
 
 const messageSchema = new Schema(
   {
+    custName: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
+    custDetails: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
     message: {
       type: String,
       required: true,
@@ -55,6 +67,8 @@ Message.getMessageByType = (type, value) =>
   Message.find({ [type]: value }).then((message) => message);
 
 Message.insertMessageDetails = (
+  custName,
+  custDetails,
   message,
   label,
   company,
@@ -63,6 +77,8 @@ Message.insertMessageDetails = (
   prediction
 ) =>
   Message.create({
+    custName: custName,
+    custDetails: custDetails,
     message: message,
     label: label,
     company: company,

@@ -21,7 +21,8 @@ module.exports.getCustRepController = [
 module.exports.insertMessageController = [
   async (req, res) => {
     try {
-      const { message, company, category, type } = req.body;
+      const { custName, custDetails, message, company, category, type } =
+        req.body;
       const { data } = await axios.post(
         "https://tts-model-alpha.herokuapp.com/predict",
         {
@@ -31,6 +32,8 @@ module.exports.insertMessageController = [
       label = data.sentiment[0];
       prediction = data.probability[0];
       const res_message = await Message.insertMessageDetails(
+        custName,
+        custDetails,
         message,
         label,
         company,
