@@ -26,6 +26,6 @@ router.post("/supervisor/login", postSupervisorLoginController);
  *
  * response :  200 OK RESPONSE-USER
  */
-router.post("/custRep/login", postCustRepLoginController);
+router.post("/rep/login", postCustRepLoginController);
 
 module.exports = router;

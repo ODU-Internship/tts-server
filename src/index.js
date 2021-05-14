@@ -34,7 +34,7 @@ const projects = [
 app.use("/supervisors", supervisorRouter);
 app.use("/auth", authRouter);
 app.use("/messages", messageRouter);
-app.use("/custRep", custRepRouter);
+app.use("/reps", custRepRouter);
 
 app.get("/", (req, res) => {
   res.send("Team Alpha");
