@@ -11,10 +11,32 @@ const messageSchema = new Schema(
       trim: true,
       minlength: 3,
     },
-    label: {
+    label: [
+      {
+        type: String,
+        trim: true,
+        minlength: 2,
+      },
+    ],
+    company: {
       type: String,
       trim: true,
       minlength: 2,
+    },
+    category: [
+      {
+        type: String,
+        trim: true,
+        minlength: 2,
+      },
+    ],
+    type: {
+      type: String,
+      trim: true,
+      minlength: 2,
+    },
+    prediction: {
+      type: Number,
     },
   },
   {
@@ -34,7 +56,21 @@ Message.updateMessageDetails = (messageID, label) =>
     (message) => message
   );
 
-Message.insertMessageDetails = (message) =>
-  Message.create({ message: message }).then((message) => message);
+Message.insertMessageDetails = (
+  message,
+  label,
+  company,
+  category,
+  type,
+  prediction
+) =>
+  Message.create({
+    message: message,
+    label: label,
+    company: company,
+    category: category,
+    type: type,
+    prediction: prediction,
+  }).then((message) => message);
 
 module.exports = Message;

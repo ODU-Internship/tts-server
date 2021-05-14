@@ -38,8 +38,15 @@ module.exports.getMessageController = [
 module.exports.insertMessageController = [
   async (req, res) => {
     try {
-      const { message } = req.body;
-      const res_message = await Message.insertMessageDetails(message);
+      const { message, label, company, category, type, prediction } = req.body;
+      const res_message = await Message.insertMessageDetails(
+        message,
+        label,
+        company,
+        category,
+        type,
+        prediction
+      );
       if (res_message == undefined) {
         throw messageNotFoundError("400", "Message could not be inserted");
       }
