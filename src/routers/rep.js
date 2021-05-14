@@ -5,9 +5,11 @@ const {
   getAllMessageController,
   getMessageController,
   updateMessageController,
-  insertMessageController,
 } = require("../controllers/MessageController");
-const { getCustRepController } = require("../controllers/CustRepController");
+const {
+  getCustRepController,
+  insertMessageController,
+} = require("../controllers/CustRepController");
 const { custRepAuth } = require("../middleware/auth");
 
 router.use(custRepAuth);
