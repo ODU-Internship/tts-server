@@ -5,13 +5,6 @@ mongoose.set("useFindAndModify", false);
 
 const messageSchema = new Schema(
   {
-    messageID: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      minlength: 3,
-    },
     message: {
       type: String,
       required: true,
@@ -34,18 +27,14 @@ const Message = mongoose.model("Message", messageSchema);
 Message.getAllMessageDetails = () => Message.find().then((message) => message);
 
 Message.getMessageDetails = (messageID) =>
-  Message.find({ messageID: messageID }).then((message) => message[0]);
+  Message.findById(messageID).then((message) => message);
 
 Message.updateMessageDetails = (messageID, label) =>
-  Message.findOneAndUpdate(
-    { messageID: messageID },
-    { label: label },
-    { new: true }
-  ).then((message) => message);
-
-Message.insertMessageDetails = (messageID, message) =>
-  Message.create({ messageID: messageID, message: message }).then(
+  Message.findByIdAndUpdate(messageID, { label: label }, { new: true }).then(
     (message) => message
   );
+
+Message.insertMessageDetails = (message) =>
+  Message.create({ message: message }).then((message) => message);
 
 module.exports = Message;

@@ -52,7 +52,6 @@ app.get("/api/projects/:id", (req, res) => {
 });
 
 app.post("/api/projects", (req, res) => {
-  console.log(req.body);
   const project = {
     id: projects.length + 1,
     name: req.body.name,

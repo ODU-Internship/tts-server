@@ -38,11 +38,8 @@ module.exports.getMessageController = [
 module.exports.insertMessageController = [
   async (req, res) => {
     try {
-      const { messageID, message } = req.body;
-      const res_message = await Message.insertMessageDetails(
-        messageID,
-        message
-      );
+      const { message } = req.body;
+      const res_message = await Message.insertMessageDetails(message);
       if (res_message == undefined) {
         throw messageNotFoundError("400", "Message could not be inserted");
       }
@@ -58,7 +55,6 @@ module.exports.updateMessageController = [
     try {
       const { messageID } = req.params;
       const { label } = req.body;
-      console.log(messageID);
       const message = await Message.updateMessageDetails(messageID, label);
       if (message == undefined) {
         throw messageNotFoundError(
@@ -68,7 +64,6 @@ module.exports.updateMessageController = [
       }
       successResponseWithData(res, message);
     } catch (error) {
-      console.log(error);
       validationErrorResponse(res, error);
     }
   },

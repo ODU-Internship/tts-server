@@ -41,7 +41,6 @@ module.exports.postSupervisorLoginController = [
       }
       const token = await supervisor.generateAuthToken();
       supervisor.password = undefined;
-      console.log(token);
       supervisor.tokens = token;
       successResponseWithData(res, supervisor);
     } catch (error) {
