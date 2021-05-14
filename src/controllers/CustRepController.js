@@ -30,7 +30,6 @@ module.exports.insertMessageController = [
       );
       label = data.sentiment[0];
       prediction = data.probability[0];
-      console.log(message, company, category, type, label, prediction);
       const res_message = await Message.insertMessageDetails(
         message,
         label,

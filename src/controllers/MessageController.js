@@ -9,7 +9,17 @@ let Message = require("../models/message.model");
 module.exports.getAllMessageController = [
   async (req, res) => {
     try {
-      const message = await Message.getAllMessageDetails();
+      const { company, category, type } = req.query;
+      let message = undefined;
+      if (typeof company != "undefined") {
+        message = await Message.getMessageByType("company", company);
+      } else if (typeof category != "undefined") {
+        message = await Message.getMessageByType("category", category);
+      } else if (typeof type != "undefined") {
+        message = await Message.getMessageByType("type", type);
+      } else {
+        message = await Message.getAllMessageDetails();
+      }
       if (message == undefined) {
         throw messageNotFoundError("400", "No Messages");
       }

@@ -51,10 +51,8 @@ Message.getAllMessageDetails = () => Message.find().then((message) => message);
 Message.getMessageDetails = (messageID) =>
   Message.findById(messageID).then((message) => message);
 
-Message.updateMessageDetails = (messageID, label) =>
-  Message.findByIdAndUpdate(messageID, { label: label }, { new: true }).then(
-    (message) => message
-  );
+Message.getMessageByType = (type, value) =>
+  Message.find({ [type]: value }).then((message) => message);
 
 Message.insertMessageDetails = (
   message,
@@ -72,5 +70,10 @@ Message.insertMessageDetails = (
     type: type,
     prediction: prediction,
   }).then((message) => message);
+
+Message.updateMessageDetails = (messageID, label) =>
+  Message.findByIdAndUpdate(messageID, { label: label }, { new: true }).then(
+    (message) => message
+  );
 
 module.exports = Message;
