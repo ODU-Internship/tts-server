@@ -8,6 +8,7 @@ const {
   messageRouter,
   custRepRouter,
   validatedMessageRouter,
+  trainRouter,
 } = require("./routers/router");
 
 require("dotenv").config();
@@ -36,6 +37,7 @@ app.use("/auth", authRouter);
 app.use("/messages", messageRouter);
 app.use("/reps", custRepRouter);
 app.use("/retrains", validatedMessageRouter);
+app.use("/trains", trainRouter);
 
 app.get("/", (req, res) => {
   res.send("Team Alpha");
