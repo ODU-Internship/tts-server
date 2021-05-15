@@ -3,3 +3,4 @@ module.exports.adminRouter = require("./admin");
 module.exports.supervisorRouter = require("./supervisor");
 module.exports.messageRouter = require("./message");
 module.exports.custRepRouter = require("./rep");
+module.exports.validatedMessageRouter = require("./validatedMessage");
