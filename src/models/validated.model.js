@@ -24,10 +24,7 @@ const validatedMessageSchema = new Schema(
   }
 );
 
-const ValidatedMessage = mongoose.model(
-  "ValidatedMessage",
-  validatedMessageSchema
-);
+const ValidatedMessage = mongoose.model("retrains", validatedMessageSchema);
 
 ValidatedMessage.getAllMessageDetails = () =>
   ValidatedMessage.find().then((message) => message);

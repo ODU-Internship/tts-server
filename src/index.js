@@ -35,7 +35,7 @@ app.use("/supervisors", supervisorRouter);
 app.use("/auth", authRouter);
 app.use("/messages", messageRouter);
 app.use("/reps", custRepRouter);
-app.use("/validatedMessages", validatedMessageRouter);
+app.use("/retrains", validatedMessageRouter);
 
 app.get("/", (req, res) => {
   res.send("Team Alpha");
