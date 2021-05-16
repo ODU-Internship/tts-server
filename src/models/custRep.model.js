@@ -86,4 +86,13 @@ const CustRep = mongoose.model("CustRep", custRepSchema);
 CustRep.getCustRepDetails = (cid) =>
   CustRep.find({ cid: cid }).then((custRep) => custRep[0]);
 
+CustRep.addCustRep = (name, cid, password, email, phone) =>
+  CustRep.create({
+    name: name,
+    cid: cid,
+    password: password,
+    email: email,
+    phone: phone,
+  }).then((custRep) => custRep);
+
 module.exports = CustRep;

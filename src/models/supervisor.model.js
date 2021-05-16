@@ -18,6 +18,24 @@ const supervisorSchema = new Schema(
       trim: true,
       minlength: 3,
     },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
     tokens: [
       {
         accessToken: {
@@ -86,5 +104,14 @@ const Supervisor = mongoose.model("Supervisor", supervisorSchema);
 
 Supervisor.getSupervisorDetails = (sid) =>
   Supervisor.find({ sid: sid }).then((supervisor) => supervisor[0]);
+
+Supervisor.addSupervisor = (name, sid, password, email, phone) =>
+  Supervisor.create({
+    name: name,
+    sid: sid,
+    password: password,
+    email: email,
+    phone: phone,
+  }).then((supervisor) => supervisor);
 
 module.exports = Supervisor;

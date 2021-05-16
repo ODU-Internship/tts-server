@@ -31,7 +31,7 @@ const projects = [
   { name: "Fall Detection", id: 3 },
 ];
 
-// app.use('/admins', adminRouter);
+app.use("/admins", adminRouter);
 app.use("/supervisors", supervisorRouter);
 app.use("/auth", authRouter);
 app.use("/messages", messageRouter);
