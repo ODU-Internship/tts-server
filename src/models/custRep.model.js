@@ -18,6 +18,29 @@ const custRepSchema = new Schema(
       trim: true,
       minlength: 3,
     },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
+    gender: {
+      type: String,
+      trim: true,
+      minlength: 1,
+    },
     tokens: [
       {
         accessToken: {
@@ -86,13 +109,14 @@ const CustRep = mongoose.model("CustRep", custRepSchema);
 CustRep.getCustRepDetails = (cid) =>
   CustRep.find({ cid: cid }).then((custRep) => custRep[0]);
 
-CustRep.addCustRep = (name, cid, password, email, phone) =>
+CustRep.addCustRep = (name, cid, password, email, phone, gender) =>
   CustRep.create({
     name: name,
     cid: cid,
     password: password,
     email: email,
     phone: phone,
+    gender: gender,
   }).then((custRep) => custRep);
 
 module.exports = CustRep;
