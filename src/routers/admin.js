@@ -7,7 +7,7 @@ const {
 
 const router = express.Router();
 
-router.post("/supervisor", supervisorSignupController);
-router.post("/rep", repSignupController);
+router.post("/supervisors", supervisorSignupController);
+router.post("/reps", repSignupController);
 
 module.exports = router;
