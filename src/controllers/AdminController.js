@@ -77,3 +77,28 @@ module.exports.getAllRepController = [
     }
   },
 ];
+
+module.exports.deleteRepController = [
+  async (req, res) => {
+    try {
+      const { repID } = req.params;
+      console.log(repID);
+      rep = await CustRep.deleteCustRep(repID);
+      successResponseWithData(res, rep);
+    } catch (error) {
+      validationErrorResponse(res, error);
+    }
+  },
+];
+
+module.exports.deleteSupervisorController = [
+  async (req, res) => {
+    try {
+      const { supervisorID } = req.params;
+      supervisor = await Supervisor.deleteSupervisor(supervisorID);
+      successResponseWithData(res, supervisor);
+    } catch (error) {
+      validationErrorResponse(res, error);
+    }
+  },
+];

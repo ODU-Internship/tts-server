@@ -121,4 +121,7 @@ CustRep.addCustRep = (name, cid, password, email, phone, gender) =>
     gender: gender,
   }).then((custRep) => custRep);
 
+CustRep.deleteCustRep = (repID) =>
+  CustRep.deleteOne({ cid: repID }).then((custRep) => custRep);
+
 module.exports = CustRep;

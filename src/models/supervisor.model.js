@@ -123,4 +123,7 @@ Supervisor.addSupervisor = (name, sid, password, email, phone, gender) =>
     gender: gender,
   }).then((supervisor) => supervisor);
 
+Supervisor.deleteSupervisor = (supervisorID) =>
+  Supervisor.deleteOne({ sid: supervisorID }).then((supervisor) => supervisor);
+
 module.exports = Supervisor;
