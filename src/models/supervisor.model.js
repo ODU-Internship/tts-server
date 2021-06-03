@@ -107,6 +107,9 @@ supervisorSchema.methods.refreshAccessToken = async (refreshToken) => {
 
 const Supervisor = mongoose.model("Supervisor", supervisorSchema);
 
+Supervisor.getAllSupervisorDetails = () =>
+  Supervisor.find().then((supervisor) => supervisor);
+
 Supervisor.getSupervisorDetails = (sid) =>
   Supervisor.find({ sid: sid }).then((supervisor) => supervisor[0]);
 

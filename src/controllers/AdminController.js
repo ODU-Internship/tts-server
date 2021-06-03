@@ -49,3 +49,31 @@ module.exports.repSignupController = [
     }
   },
 ];
+
+module.exports.getAllSupervisorController = [
+  async (req, res) => {
+    try {
+      supervisor = await Supervisor.getAllSupervisorDetails();
+      if (supervisor == undefined) {
+        throw messageNotFoundError("400", "No Supervisors");
+      }
+      successResponseWithData(res, supervisor);
+    } catch (error) {
+      validationErrorResponse(res, error);
+    }
+  },
+];
+
+module.exports.getAllRepController = [
+  async (req, res) => {
+    try {
+      rep = await CustRep.getAllCustRepDetails();
+      if (rep == undefined) {
+        throw messageNotFoundError("400", "No Customer Representatives");
+      }
+      successResponseWithData(res, rep);
+    } catch (error) {
+      validationErrorResponse(res, error);
+    }
+  },
+];

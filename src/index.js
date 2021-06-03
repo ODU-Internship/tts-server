@@ -50,7 +50,7 @@ app.get("/api/projects", (req, res) => {
 app.get("/api/projects/:id", (req, res) => {
   const project = projects.find((c) => c.id === parseInt(req.params.id));
   if (!project)
-    res.status(404).send("Ooops... Cant find what you are looking for!");
+    res.status(404).send("Oops... Cant find what you are looking for!");
   res.send(project);
 });
 

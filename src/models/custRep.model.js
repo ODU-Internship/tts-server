@@ -106,6 +106,8 @@ custRepSchema.methods.refreshAccessToken = async (refreshToken) => {
 
 const CustRep = mongoose.model("CustRep", custRepSchema);
 
+CustRep.getAllCustRepDetails = () => CustRep.find().then((custRep) => custRep);
+
 CustRep.getCustRepDetails = (cid) =>
   CustRep.find({ cid: cid }).then((custRep) => custRep[0]);
 
