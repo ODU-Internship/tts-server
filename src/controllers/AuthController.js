@@ -19,7 +19,9 @@ module.exports.postAdminLoginController = [
           "Admin password does not match"
         );
       }
+      const token = await admin.generateAuthToken();
       admin.password = undefined;
+      admin.tokens = token;
       successResponseWithData(res, admin);
     } catch (error) {
       unauthorizedResponse(res, error);

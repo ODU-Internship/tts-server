@@ -21,6 +21,14 @@ const findCustRep = async (req) => {
   return CustRep.findOne({ cid: id, "tokens.accessToken": accessToken });
 };
 
+const findAdmin = async (req) => {
+  const accessToken = req
+    .header(constants.authorizatationHeaderName)
+    .replace(constants.bearerTokenLabel, "");
+  const { id } = tokens.decodeAccessToken(accessToken);
+  return CustRep.findOne({ aid: id, "tokens.accessToken": accessToken });
+};
+
 // auth controller only for supervisor access
 module.exports.supervisorAuth = async (req, res, next) => {
   try {
@@ -50,6 +58,25 @@ module.exports.custRepAuth = async (req, res, next) => {
     custRep.tokens = undefined;
     custRep.password = undefined;
     req.custRep = custRep;
+    next();
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      response.unauthorizedResponse(res, error);
+      return;
+    }
+    response.forbiddenResponse(res, error);
+  }
+};
+
+module.exports.adminAuth = async (req, res, next) => {
+  try {
+    const admin = await findAdmin(req);
+    if (!admin) {
+      throw new Error("Admin not found");
+    }
+    admin.tokens = undefined;
+    admin.password = undefined;
+    req.admin = admin;
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
