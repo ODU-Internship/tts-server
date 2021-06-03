@@ -57,6 +57,10 @@ module.exports.getAllSupervisorController = [
       if (supervisor == undefined) {
         throw messageNotFoundError("400", "No Supervisors");
       }
+      await supervisor.forEach((supervisor) => {
+        supervisor.tokens = undefined;
+        supervisor.password = undefined;
+      });
       successResponseWithData(res, supervisor);
     } catch (error) {
       validationErrorResponse(res, error);
@@ -71,6 +75,10 @@ module.exports.getAllRepController = [
       if (rep == undefined) {
         throw messageNotFoundError("400", "No Customer Representatives");
       }
+      await rep.forEach((rep) => {
+        rep.tokens = undefined;
+        rep.password = undefined;
+      });
       successResponseWithData(res, rep);
     } catch (error) {
       validationErrorResponse(res, error);
