@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Supervisor = require("../models/supervisor.model");
 const CustRep = require("../models/custRep.model");
+const Admin = require("../models/admin.model");
 const response = require("../helpers/response");
 const constants = require("../helpers/constants");
 const tokens = require("../helpers/tokens");
@@ -26,7 +27,7 @@ const findAdmin = async (req) => {
     .header(constants.authorizatationHeaderName)
     .replace(constants.bearerTokenLabel, "");
   const { id } = tokens.decodeAccessToken(accessToken);
-  return CustRep.findOne({ aid: id, "tokens.accessToken": accessToken });
+  return Admin.findOne({ aid: id, "tokens.accessToken": accessToken });
 };
 
 // auth controller only for supervisor access

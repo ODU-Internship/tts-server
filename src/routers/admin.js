@@ -1,6 +1,7 @@
 const express = require("express");
 
 const {
+  getAdminController,
   supervisorSignupController,
   repSignupController,
   getAllSupervisorController,
@@ -8,9 +9,12 @@ const {
   deleteSupervisorController,
   deleteRepController,
 } = require("../controllers/AdminController");
+const { adminAuth } = require("../middleware/auth");
 
 const router = express.Router();
+router.use(adminAuth);
 
+router.get("/me", getAdminController);
 router.get("/supervisors", getAllSupervisorController);
 router.get("/reps", getAllRepController);
 router.delete("/supervisors/:supervisorID", deleteSupervisorController);

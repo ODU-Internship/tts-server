@@ -1,6 +1,7 @@
 const {
   successResponseWithData,
   validationErrorResponse,
+  unauthorizedResponse,
 } = require("../helpers/response");
 const { createPermissionError } = require("../helpers/errors");
 let CustRep = require("../models/custRep.model");
@@ -107,6 +108,16 @@ module.exports.deleteSupervisorController = [
       successResponseWithData(res, supervisor);
     } catch (error) {
       validationErrorResponse(res, error);
+    }
+  },
+];
+
+module.exports.getAdminController = [
+  async (req, res) => {
+    try {
+      successResponseWithData(res, req.admin);
+    } catch (error) {
+      unauthorizedResponse(res, error);
     }
   },
 ];
