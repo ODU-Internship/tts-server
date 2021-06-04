@@ -77,3 +77,21 @@ module.exports.updateMessageController = [
     }
   },
 ];
+
+module.exports.deleteMessageController = [
+  async (req, res) => {
+    try {
+      const { messageID } = req.params;
+      const message = await ValidatedMessage.deleteMessageDetails(messageID);
+      if (message == undefined) {
+        throw messageNotFoundError(
+          "MessageID_invalid",
+          "Message does not exist"
+        );
+      }
+      successResponseWithData(res, message);
+    } catch (error) {
+      validationErrorResponse(res, error);
+    }
+  },
+];

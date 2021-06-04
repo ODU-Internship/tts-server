@@ -45,4 +45,7 @@ ValidatedMessage.updateMessageDetails = (messageID, label) =>
     { new: true }
   ).then((message) => message);
 
+ValidatedMessage.deleteMessageDetails = (messageID) =>
+  ValidatedMessage.findByIdAndDelete(messageID).then((message) => message);
+
 module.exports = ValidatedMessage;
