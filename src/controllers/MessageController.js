@@ -82,15 +82,20 @@ module.exports.updateMessageController = [
   async (req, res) => {
     try {
       const { messageID } = req.params;
-      const { label } = req.body;
-      const message = await Message.updateMessageDetails(messageID, label);
-      if (message == undefined) {
+      const { message, category, label } = req.body;
+      const mess = await Message.updateMessageDetails(
+        messageID,
+        message,
+        category,
+        label
+      );
+      if (mess == undefined) {
         throw messageNotFoundError(
           "MessageID_invalid",
           "Message does not exist"
         );
       }
-      successResponseWithData(res, message);
+      successResponseWithData(res, mess);
     } catch (error) {
       validationErrorResponse(res, error);
     }

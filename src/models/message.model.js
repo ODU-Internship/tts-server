@@ -87,9 +87,11 @@ Message.insertMessageDetails = (
     prediction: prediction,
   }).then((message) => message);
 
-Message.updateMessageDetails = (messageID, label) =>
-  Message.findByIdAndUpdate(messageID, { label: label }, { new: true }).then(
-    (message) => message
-  );
+Message.updateMessageDetails = (messageID, message, category, label) =>
+  Message.findByIdAndUpdate(
+    messageID,
+    { message: message, category: category, label: label },
+    { new: true }
+  ).then((message) => message);
 
 module.exports = Message;
